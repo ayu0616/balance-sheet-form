@@ -2,7 +2,16 @@ import { Button, ButtonGroup, Form, FormControl, InputGroup } from "react-bootst
 import FormGroup from "./FormGroup";
 import { useState } from "react";
 
-const DateInput = () => {
+type dataType = {
+	month: number;
+	day: number;
+	cashOrBank: string;
+	kind: string;
+	content: string;
+	amount: number;
+};
+
+const DateInput = ({ data }: { data: dataType }) => {
 	const [date, setDate] = useState(new Date());
 	const [month, setMonth] = useState(date.getMonth() + 1);
 	const [day, setDay] = useState(date.getDate());
@@ -11,6 +20,8 @@ const DateInput = () => {
 		setMonth(dateToChange.getMonth() + 1);
 		setDay(dateToChange.getDate());
 		changeButtonState(dateToChange);
+		data.month = dateToChange.getMonth() + 1;
+		data.day = dateToChange.getDate();
 	};
 
 	const dateUp = () => {
@@ -72,9 +83,9 @@ const DateInput = () => {
 		<FormGroup>
 			<Form.Label>日付</Form.Label>
 			<InputGroup>
-				<FormControl type="text" value={month} onChange={() => {}}></FormControl>
+				<FormControl type="tel" value={month} onChange={() => {}}></FormControl>
 				<InputGroup.Text>月</InputGroup.Text>
-				<FormControl type="text" value={day} onChange={() => {}}></FormControl>
+				<FormControl type="tel" value={day} onChange={() => {}}></FormControl>
 				<InputGroup.Text>日</InputGroup.Text>
 				<ButtonGroup vertical>
 					<Button id="day-up" variant="secondary" onClick={dateUp}>
@@ -100,16 +111,35 @@ const DateInput = () => {
 	);
 };
 
-const CashBankInput = () => {
+const CashBankInput = ({ data }: { data: dataType }) => {
 	return (
 		<FormGroup>
 			<p className="m-0">現金／銀行・カード</p>
 			<ButtonGroup className="mt-3 w-100">
-				<input id="cash" className="btn-check" type="radio" name="cash-or-bank-radio" value="現金" defaultChecked />
+				<input
+					id="cash"
+					className="btn-check"
+					type="radio"
+					name="cash-or-bank-radio"
+					value="現金"
+					defaultChecked
+					onClick={(e) => {
+						data.cashOrBank = e.currentTarget.value;
+					}}
+				/>
 				<label htmlFor="cash" className="btn btn-outline-primary w-50">
 					現金
 				</label>
-				<input id="bank" className="btn-check" type="radio" name="cash-or-bank-radio" value="銀行・カード" />
+				<input
+					id="bank"
+					className="btn-check"
+					type="radio"
+					name="cash-or-bank-radio"
+					value="銀行・カード"
+					onClick={(e) => {
+						data.cashOrBank = e.currentTarget.value;
+					}}
+				/>
 				<label htmlFor="bank" className="btn btn-outline-primary w-50">
 					銀行・カード
 				</label>
@@ -118,18 +148,31 @@ const CashBankInput = () => {
 	);
 };
 
-const KindInput = () => {
+const KindInput = ({ data }: { data: dataType }) => {
+	const [value, setValue] = useState(data.kind);
+
 	const options = ["学業", "趣味", "飲食費", "旅費", "交通費", "通信費", "その他費用", "収入", "出金", "入金", "繰越"];
 	const optionElems: JSX.IntrinsicElements["option"][] = [];
 	options.forEach((option, index) => {
-		optionElems.push(<option key={index + 1}>{option}</option>);
+		optionElems.push(
+			<option value={option} key={index + 1}>
+				{option}
+			</option>
+		);
 	});
 
 	return (
 		<FormGroup>
 			<Form.Label>種別</Form.Label>
-			<Form.Select defaultValue={0}>
-				<option disabled value={0}>
+			<Form.Select
+				value={value}
+				onChange={(e) => {
+					const currentVal = e.currentTarget.value;
+					setValue(currentVal);
+					data.kind = currentVal;
+				}}
+			>
+				<option disabled value={""}>
 					選択してください
 				</option>
 				{optionElems}
@@ -138,21 +181,43 @@ const KindInput = () => {
 	);
 };
 
-const ContentInput = () => {
+const ContentInput = ({ data }: { data: dataType }) => {
+	const [value, setValue] = useState(data.content);
 	return (
 		<FormGroup>
 			<Form.Label>内容</Form.Label>
-			<Form.Control></Form.Control>
+			<Form.Control
+				value={value}
+				onChange={(e) => {
+					const currentVal = e.currentTarget.value;
+					setValue(currentVal);
+					data.content = currentVal;
+				}}
+			></Form.Control>
 		</FormGroup>
 	);
 };
 
-const AmountInput = () => {
+const AmountInput = ({ data }: { data: dataType }) => {
+	const [value, setValue] = useState(data.amount.toString());
 	return (
 		<FormGroup>
 			<Form.Label>金額</Form.Label>
 			<InputGroup>
-				<Form.Control />
+				<Form.Control
+					type="tel"
+					value={value}
+					onChange={(e) => {
+						const currentVal = Number(e.currentTarget.value);
+						if (isNaN(currentVal) || currentVal <= 0) {
+							setValue("");
+							data.amount = 0;
+							return;
+						}
+						setValue(currentVal.toString());
+						data.amount = currentVal;
+					}}
+				/>
 				<InputGroup.Text>円</InputGroup.Text>
 			</InputGroup>
 		</FormGroup>

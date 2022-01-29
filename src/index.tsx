@@ -6,8 +6,8 @@ import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <MainFrom/>
+	<React.StrictMode>
+		<MainFrom />
 	</React.StrictMode>,
 	document.getElementById("root")
 );
