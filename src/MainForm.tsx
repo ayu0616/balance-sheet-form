@@ -2,21 +2,25 @@ import { Button, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { DateInput, CashBankInput, KindInput, ContentInput, AmountInput } from "./InputAreas";
 import $ from "jquery";
+import { useState } from "react";
 
 const MainForm = () => {
+	const [kindValue, setKindValue] = useState("");
+	const [contentValue, setContentValue] = useState("");
+	const [amountValue, setAmountValue] = useState("");
+
 	const today = new Date();
 	const data = {
 		month: today.getMonth() + 1,
 		day: today.getDate(),
 		cashOrBank: "現金",
-		kind: "",
-		content: "",
-		amount: 0,
+		kind: kindValue,
+		content: contentValue,
+		amount: Number(amountValue),
 	};
 
 	const btnOnClick = () => {
-		console.log(data)
-		if (data.kind == "" || data.content == "" || isNaN(data.amount) || data.amount < 0) {
+		if (data.kind == "" || data.content == "" || isNaN(data.amount) || data.amount <= 0) {
 			return;
 		}
 		const sendData = {
@@ -32,10 +36,10 @@ const MainForm = () => {
 			method: "post",
 			data: sendData,
 		}).done(() => {
-			console.log("succeed");
-			data.kind = ""
-			data.content = ""
-			data.amount = 0
+			alert("送信完了しました")
+			setKindValue("");
+			setContentValue("");
+			setAmountValue("");
 		});
 	};
 
@@ -43,9 +47,9 @@ const MainForm = () => {
 		<Form id="main-form" className="mx-auto my-3 p-3">
 			<DateInput data={data} />
 			<CashBankInput data={data} />
-			<KindInput data={data} />
-			<ContentInput data={data} />
-			<AmountInput data={data} />
+			<KindInput value={kindValue} kindOnChange={setKindValue} />
+			<ContentInput value={contentValue} contentOnChange={setContentValue} />
+			<AmountInput value={amountValue} amountOnChange={setAmountValue} />
 			<Button className="w-100" onClick={btnOnClick}>
 				送信
 			</Button>

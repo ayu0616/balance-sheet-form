@@ -148,9 +148,7 @@ const CashBankInput = ({ data }: { data: dataType }) => {
 	);
 };
 
-const KindInput = ({ data }: { data: dataType }) => {
-	const [value, setValue] = useState(data.kind);
-
+const KindInput = ({ value, kindOnChange }: { value: string; kindOnChange: (value: string) => void }) => {
 	const options = ["学業", "趣味", "飲食費", "旅費", "交通費", "通信費", "その他費用", "収入", "出金", "入金", "繰越"];
 	const optionElems: JSX.IntrinsicElements["option"][] = [];
 	options.forEach((option, index) => {
@@ -168,8 +166,7 @@ const KindInput = ({ data }: { data: dataType }) => {
 				value={value}
 				onChange={(e) => {
 					const currentVal = e.currentTarget.value;
-					setValue(currentVal);
-					data.kind = currentVal;
+					kindOnChange(currentVal);
 				}}
 			>
 				<option disabled value={""}>
@@ -181,8 +178,7 @@ const KindInput = ({ data }: { data: dataType }) => {
 	);
 };
 
-const ContentInput = ({ data }: { data: dataType }) => {
-	const [value, setValue] = useState(data.content);
+const ContentInput = ({ value, contentOnChange }: { value: string; contentOnChange: (value: string) => void }) => {
 	return (
 		<FormGroup>
 			<Form.Label>内容</Form.Label>
@@ -190,16 +186,14 @@ const ContentInput = ({ data }: { data: dataType }) => {
 				value={value}
 				onChange={(e) => {
 					const currentVal = e.currentTarget.value;
-					setValue(currentVal);
-					data.content = currentVal;
+					contentOnChange(currentVal);
 				}}
 			></Form.Control>
 		</FormGroup>
 	);
 };
 
-const AmountInput = ({ data }: { data: dataType }) => {
-	const [value, setValue] = useState(data.amount.toString());
+const AmountInput = ({ value, amountOnChange }: { value: string; amountOnChange: (value: string) => void }) => {
 	return (
 		<FormGroup>
 			<Form.Label>金額</Form.Label>
@@ -210,12 +204,10 @@ const AmountInput = ({ data }: { data: dataType }) => {
 					onChange={(e) => {
 						const currentVal = Number(e.currentTarget.value);
 						if (isNaN(currentVal) || currentVal <= 0) {
-							setValue("");
-							data.amount = 0;
+							amountOnChange("");
 							return;
 						}
-						setValue(currentVal.toString());
-						data.amount = currentVal;
+						amountOnChange(currentVal.toString());
 					}}
 				/>
 				<InputGroup.Text>円</InputGroup.Text>
