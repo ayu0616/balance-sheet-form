@@ -11,7 +11,7 @@
   ],
   "start_url": "https://ayu0616.github.io/account_book/",
   "display": "standalone",
-  "theme_color": "f1f3f4",
+  "theme_color": "#f1f3f4",
   "background_color": "#ffffff",
   "related_applications": []
 }
