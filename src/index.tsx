@@ -1,13 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import MainFrom from "./MainForm";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
+import MainContent from "./MainContent";
 
 ReactDOM.render(
 	<React.StrictMode>
-		<MainFrom />
+		<header id="title-header" className="p-3 mb-3">
+			<h1 className="m-0">お小遣い帳入力フォーム</h1>
+		</header>
+		<main>
+			<MainContent />
+		</main>
 	</React.StrictMode>,
 	document.getElementById("root")
 );

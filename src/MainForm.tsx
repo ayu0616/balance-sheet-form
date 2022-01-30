@@ -8,6 +8,7 @@ const MainForm = () => {
 	const [kindValue, setKindValue] = useState("");
 	const [contentValue, setContentValue] = useState("");
 	const [amountValue, setAmountValue] = useState("");
+	const [submitButtonState, setSubmitButtonState] = useState(false)
 
 	const today = new Date();
 	const data = {
@@ -31,6 +32,8 @@ const MainForm = () => {
 			"entry.321306606": data.amount.toString(),
 		};
 
+		setSubmitButtonState(true)
+
 		$.ajax({
 			url: "https://not-cors.herokuapp.com/" + "https://docs.google.com/forms/u/0/d/e/1FAIpQLScW_qpNvlhLDsAMQX4TPvZdviPPj4LcIN0xGVB9Gzt5op5Uaw/formResponse",
 			method: "post",
@@ -40,17 +43,19 @@ const MainForm = () => {
 			setKindValue("");
 			setContentValue("");
 			setAmountValue("");
+		}).always(() => {
+			setSubmitButtonState(false)
 		});
 	};
 
 	return (
-		<Form id="main-form" className="mx-auto my-3 p-3">
+		<Form id="main-form" className="my-3 p-3">
 			<DateInput data={data} />
 			<CashBankInput data={data} />
 			<KindInput value={kindValue} kindOnChange={setKindValue} />
 			<ContentInput value={contentValue} contentOnChange={setContentValue} />
 			<AmountInput value={amountValue} amountOnChange={setAmountValue} />
-			<Button className="w-100" onClick={btnOnClick}>
+			<Button className="w-100" onClick={btnOnClick} disabled={submitButtonState}>
 				送信
 			</Button>
 		</Form>

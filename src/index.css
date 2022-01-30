@@ -1,3 +1,9 @@
-#main-form{
+#main-content {
   max-width: 600px;
+}
+
+#title-header {
+  background-color: #f1f3f4;
+  position: sticky;
+  top: 0;
 }
