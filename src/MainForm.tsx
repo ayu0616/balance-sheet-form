@@ -50,6 +50,7 @@ const MainForm = () => {
 
 	return (
 		<Form id="main-form" className="my-3 p-3">
+			<h2>入力フォーム</h2>
 			<DateInput data={data} />
 			<CashBankInput data={data} />
 			<KindInput value={kindValue} kindOnChange={setKindValue} />

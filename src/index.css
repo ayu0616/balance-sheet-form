@@ -1,4 +1,10 @@
 #main-content {
+  min-width: 400px;
+  max-width: 600px;
+}
+
+#added-container {
+  min-width: 350px;
   max-width: 600px;
 }
 

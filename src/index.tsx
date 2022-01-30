@@ -3,16 +3,14 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
-import MainContent from "./MainContent";
+import Main from "./Main";
 
 ReactDOM.render(
 	<React.StrictMode>
 		<header id="title-header" className="p-3 mb-3">
 			<h1 className="m-0">お小遣い帳入力フォーム</h1>
 		</header>
-		<main>
-			<MainContent />
-		</main>
+		<Main />
 	</React.StrictMode>,
 	document.getElementById("root")
 );

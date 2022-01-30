@@ -5,7 +5,7 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 const CurrentAmountValue = ({ title, cash, bank, sum }: { title: string; cash: string; bank: string; sum: string }) => {
 	return (
 		<Col className="border rounded-3 p-3 mx-3">
-			<h2>{title}</h2>
+			<h3>{title}</h3>
 			<p className="m-0">現金：{cash}</p>
 			<p className="m-0">銀行：{bank}</p>
 			<p className="m-0">合計：{sum}</p>
@@ -70,6 +70,7 @@ const CurrentAmount = () => {
 
 	return (
 		<Container id="current-data" className="mb-3">
+			<h2>データ</h2>
 			<Row className={dataDisplay}>
 				<CurrentAmountValue title="現在の残高" cash={balance.cash} bank={balance.bank} sum={balance.sum}></CurrentAmountValue>
 				<CurrentAmountValue title="今月の収支" cash={flow.cash} bank={flow.bank} sum={flow.sum}></CurrentAmountValue>
