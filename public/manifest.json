@@ -1,4 +1,8 @@
 {
+
+ 　"lang": "ja",
+  "name": "お小遣い帳入力フォーム",
+  "short_name": "お小遣い帳",
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#ffffff",
