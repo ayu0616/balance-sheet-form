@@ -1,5 +1,14 @@
 {
-  "start_url": ".",
+  "lang": "ja",
+  "name": "お小遣い帳入力フォーム",
+  "short_name": "お小遣い帳",
+  "icons":[
+    {
+      "src": "./icon.jpg",
+      "sizes": "48x48 72x72 96x96 128x128 256x256"
+    }
+  ],
+  "start_url": "https://ayu0616.github.io/account_book/",
   "display": "standalone",
   "theme_color": "#ffffff",
   "background_color": "#ffffff"
