@@ -4,12 +4,11 @@ import "./index.css";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 import Main from "./Main";
+import Header from "./Header";
 
 ReactDOM.render(
 	<React.StrictMode>
-		<header id="title-header" className="p-3 mb-3">
-			<h1 className="m-0">お小遣い帳入力フォーム</h1>
-		</header>
+		<Header />
 		<Main />
 	</React.StrictMode>,
 	document.getElementById("root")

@@ -11,7 +11,7 @@ type dataType = {
 	amount: number;
 };
 
-const DateInput = ({ data }: { data: dataType }) => {
+const DateInput = (props: { data: dataType }) => {
 	const [date, setDate] = useState(new Date());
 	const [month, setMonth] = useState(date.getMonth() + 1);
 	const [day, setDay] = useState(date.getDate());
@@ -20,8 +20,8 @@ const DateInput = ({ data }: { data: dataType }) => {
 		setMonth(dateToChange.getMonth() + 1);
 		setDay(dateToChange.getDate());
 		changeButtonState(dateToChange);
-		data.month = dateToChange.getMonth() + 1;
-		data.day = dateToChange.getDate();
+		props.data.month = dateToChange.getMonth() + 1;
+		props.data.day = dateToChange.getDate();
 	};
 
 	const dateUp = () => {
@@ -111,7 +111,7 @@ const DateInput = ({ data }: { data: dataType }) => {
 	);
 };
 
-const CashBankInput = ({ data }: { data: dataType }) => {
+const CashBankInput = (props: { data: dataType }) => {
 	return (
 		<FormGroup>
 			<p className="m-0">現金／銀行・カード</p>
@@ -124,7 +124,7 @@ const CashBankInput = ({ data }: { data: dataType }) => {
 					value="現金"
 					defaultChecked
 					onClick={(e) => {
-						data.cashOrBank = e.currentTarget.value;
+						props.data.cashOrBank = e.currentTarget.value;
 					}}
 				/>
 				<label htmlFor="cash" className="btn btn-outline-primary w-50">
@@ -137,7 +137,7 @@ const CashBankInput = ({ data }: { data: dataType }) => {
 					name="cash-or-bank-radio"
 					value="銀行・カード"
 					onClick={(e) => {
-						data.cashOrBank = e.currentTarget.value;
+						props.data.cashOrBank = e.currentTarget.value;
 					}}
 				/>
 				<label htmlFor="bank" className="btn btn-outline-primary w-50">
@@ -148,7 +148,7 @@ const CashBankInput = ({ data }: { data: dataType }) => {
 	);
 };
 
-const KindInput = ({ value, kindOnChange }: { value: string; kindOnChange: (value: string) => void }) => {
+const KindInput = (props: { value: string; kindOnChange: (value: string) => void }) => {
 	const options = ["学業", "趣味", "飲食費", "旅費", "交通費", "通信費", "その他費用", "収入", "出金", "入金", "繰越"];
 	const optionElems: JSX.IntrinsicElements["option"][] = [];
 	options.forEach((option, index) => {
@@ -163,10 +163,10 @@ const KindInput = ({ value, kindOnChange }: { value: string; kindOnChange: (valu
 		<FormGroup>
 			<Form.Label>種別</Form.Label>
 			<Form.Select
-				value={value}
+				value={props.value}
 				onChange={(e) => {
 					const currentVal = e.currentTarget.value;
-					kindOnChange(currentVal);
+					props.kindOnChange(currentVal);
 				}}
 			>
 				<option disabled value={""}>
@@ -178,36 +178,36 @@ const KindInput = ({ value, kindOnChange }: { value: string; kindOnChange: (valu
 	);
 };
 
-const ContentInput = ({ value, contentOnChange }: { value: string; contentOnChange: (value: string) => void }) => {
+const ContentInput = (props: { value: string; contentOnChange: (value: string) => void }) => {
 	return (
 		<FormGroup>
 			<Form.Label>内容</Form.Label>
 			<Form.Control
-				value={value}
+				value={props.value}
 				onChange={(e) => {
 					const currentVal = e.currentTarget.value;
-					contentOnChange(currentVal);
+					props.contentOnChange(currentVal);
 				}}
 			></Form.Control>
 		</FormGroup>
 	);
 };
 
-const AmountInput = ({ value, amountOnChange }: { value: string; amountOnChange: (value: string) => void }) => {
+const AmountInput = (props: { value: string; amountOnChange: (value: string) => void }) => {
 	return (
 		<FormGroup>
 			<Form.Label>金額</Form.Label>
 			<InputGroup>
 				<Form.Control
 					type="tel"
-					value={value}
+					value={props.value}
 					onChange={(e) => {
 						const currentVal = Number(e.currentTarget.value);
 						if (isNaN(currentVal) || currentVal <= 0) {
-							amountOnChange("");
+							props.amountOnChange("");
 							return;
 						}
-						amountOnChange(currentVal.toString());
+						props.amountOnChange(currentVal.toString());
 					}}
 				/>
 				<InputGroup.Text>円</InputGroup.Text>

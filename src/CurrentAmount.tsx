@@ -2,13 +2,13 @@ import $ from "jquery";
 import { useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 
-const CurrentAmountValue = ({ title, cash, bank, sum }: { title: string; cash: string; bank: string; sum: string }) => {
+const CurrentAmountValue = (props: { title: string; cash: string; bank: string; sum: string }) => {
 	return (
 		<Col className="border rounded-3 p-3 mx-3">
-			<h3>{title}</h3>
-			<p className="m-0">現金：{cash}</p>
-			<p className="m-0">銀行：{bank}</p>
-			<p className="m-0">合計：{sum}</p>
+			<h3>{props.title}</h3>
+			<p className="m-0">現金：{props.cash}</p>
+			<p className="m-0">銀行：{props.bank}</p>
+			<p className="m-0">合計：{props.sum}</p>
 		</Col>
 	);
 };
@@ -53,7 +53,7 @@ const CurrentAmount = () => {
 	const [balance, setBalance] = useState({ cash: "", bank: "", sum: "" });
 	const [flow, setFlow] = useState({ cash: "", bank: "", sum: "" });
 
-	const updateData = () => {
+	const updateData = async () => {
 		$.getJSON(jsonUrl).done((json) => {
 			setBalance(getBalance(json.values));
 			setFlow(getFlow(json.values));
@@ -69,7 +69,7 @@ const CurrentAmount = () => {
 	};
 
 	return (
-		<Container id="current-data" className="mb-3">
+		<div id="current-data" className="mb-3 p-3">
 			<h2>データ</h2>
 			<Row className={dataDisplay}>
 				<CurrentAmountValue title="現在の残高" cash={balance.cash} bank={balance.bank} sum={balance.sum}></CurrentAmountValue>
@@ -78,7 +78,7 @@ const CurrentAmount = () => {
 			<Button className="w-100 mt-3" onClick={buttonOnClick}>
 				{buttonText}
 			</Button>
-		</Container>
+		</div>
 	);
 };
 
