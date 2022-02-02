@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form, FormControl } from "react-bootstrap";
 import $ from "jquery";
+import { kindOptions } from "./helper";
 
 // type addedDataType = {
 // 	date: string;
@@ -15,9 +16,8 @@ const AddedValues = (props: { addedData: string[]; onClick: () => void }) => {
 	const [kindValue, setKindValue] = useState("");
 	const [contentValue, setContentValue] = useState("");
 
-	const options = ["学業", "趣味", "飲食費", "旅費", "交通費", "通信費", "その他費用", "収入", "出金", "入金", "繰越"];
 	const optionElems: JSX.IntrinsicElements["option"][] = [];
-	options.forEach((option, index) => {
+	kindOptions.forEach((option, index) => {
 		optionElems.push(
 			<option value={option} key={index + 1}>
 				{option}

@@ -1,6 +1,7 @@
 import { Button, ButtonGroup, Form, FormControl, InputGroup } from "react-bootstrap";
 import FormGroup from "./FormGroup";
 import { useState } from "react";
+import { kindOptions } from "./helper";
 
 type dataType = {
 	month: number;
@@ -149,9 +150,8 @@ const CashBankInput = (props: { data: dataType }) => {
 };
 
 const KindInput = (props: { value: string; kindOnChange: (value: string) => void }) => {
-	const options = ["学業", "趣味", "飲食費", "旅費", "交通費", "通信費", "その他費用", "収入", "出金", "入金", "繰越"];
 	const optionElems: JSX.IntrinsicElements["option"][] = [];
-	options.forEach((option, index) => {
+	kindOptions.forEach((option, index) => {
 		optionElems.push(
 			<option value={option} key={index + 1}>
 				{option}
