@@ -9,6 +9,11 @@ const MainForm = () => {
 	const [contentValue, setContentValue] = useState("");
 	const [amountValue, setAmountValue] = useState("");
 	const [submitButtonState, setSubmitButtonState] = useState(false);
+	const submitButtonTexts = {
+		normal: <span>送信</span>,
+		loading: <img src="./account_book/loading_animation.svg" height="24px"></img>,
+	};
+	const [submitButtonText, setSubmitButtonText] = useState(submitButtonTexts.normal);
 
 	const kindOnChange = (value: string) => {
 		setKindValue(value);
@@ -51,6 +56,8 @@ const MainForm = () => {
 		};
 		// ボタンを押せないように
 		setSubmitButtonState(true);
+		// ボタンをロード画面に
+		setSubmitButtonText(submitButtonTexts.loading);
 		// 銀行とのやり取りなら、方法とプラスマイナスを逆転したデータを送信する
 		if (["出金", "入金"].includes(data.kind)) {
 			/**逆転するデータ */
@@ -79,6 +86,8 @@ const MainForm = () => {
 			.always(() => {
 				// ボタンを押せるように戻す
 				setSubmitButtonState(false);
+				// ボタンのテキストを戻す
+				setSubmitButtonText(submitButtonTexts.normal);
 			});
 	};
 
@@ -91,7 +100,7 @@ const MainForm = () => {
 			<ContentInput value={contentValue} contentOnChange={setContentValue} />
 			<AmountInput value={amountValue} amountOnChange={setAmountValue} />
 			<Button className="w-100" onClick={btnOnClick} disabled={submitButtonState}>
-				送信
+				{submitButtonText}
 			</Button>
 		</Form>
 	);

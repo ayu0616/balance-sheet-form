@@ -12,6 +12,14 @@ import { kindOptions } from "./helper";
 // };
 
 const AddedValues = (props: { addedData: string[]; onClick: () => void }) => {
+	const dataDict = {
+		date: props.addedData[0],
+		way: props.addedData[1],
+		kind: props.addedData[2],
+		content: props.addedData[3],
+		amount: props.addedData[4],
+		id: props.addedData[5],
+	};
 	const [formClass, setFormClass] = useState("added-value border rounded-3 p-3 my-3");
 	const [kindValue, setKindValue] = useState("");
 	const [contentValue, setContentValue] = useState("");
@@ -27,12 +35,12 @@ const AddedValues = (props: { addedData: string[]; onClick: () => void }) => {
 
 	const sendSubForm = () => {
 		const subFormData = {
-			"entry.143907117": props.addedData[1],
-			"entry.404340766": props.addedData[2],
-			"entry.1171936216": props.addedData[3],
-			"entry.1297137810": props.addedData[4],
-			"entry.321306606": props.addedData[5],
-			"entry.2061631037": props.addedData[6],
+			"entry.143907117": dataDict.date,
+			"entry.404340766": dataDict.way,
+			"entry.1171936216": dataDict.kind,
+			"entry.1297137810": dataDict.content,
+			"entry.321306606": dataDict.amount,
+			"entry.2061631037": dataDict.id,
 		};
 		$.ajax({
 			url: "https://not-cors.herokuapp.com/" + "https://docs.google.com/forms/u/0/d/e/1FAIpQLSeN_YxlXOgLL9LKzEjG-NuTAQy7BPTBglSWZw5afw1x-V0uZQ/formResponse",
@@ -43,11 +51,11 @@ const AddedValues = (props: { addedData: string[]; onClick: () => void }) => {
 
 	const sendMainForm = () => {
 		const mainFormData = {
-			"entry.143907117": props.addedData[1],
-			"entry.404340766": props.addedData[2],
+			"entry.143907117": dataDict.date,
+			"entry.404340766": dataDict.way,
 			"entry.1171936216": kindValue,
 			"entry.1297137810": contentValue,
-			"entry.321306606": props.addedData[5],
+			"entry.321306606": dataDict.id,
 		};
 		$.ajax({
 			url: "https://not-cors.herokuapp.com/" + "https://docs.google.com/forms/u/0/d/e/1FAIpQLScW_qpNvlhLDsAMQX4TPvZdviPPj4LcIN0xGVB9Gzt5op5Uaw/formResponse",
@@ -69,7 +77,7 @@ const AddedValues = (props: { addedData: string[]; onClick: () => void }) => {
 	return (
 		<Form className={formClass}>
 			<p>
-				{props.addedData[1]} {props.addedData[2]}（{props.addedData[5]}円）
+				{dataDict.date} {dataDict.way}（{dataDict.amount}円）
 			</p>
 			<Form.Select
 				className="mb-3"
@@ -86,7 +94,7 @@ const AddedValues = (props: { addedData: string[]; onClick: () => void }) => {
 			</Form.Select>
 			<FormControl
 				className="mb-3"
-				placeholder={props.addedData[4]}
+				placeholder={dataDict.content}
 				value={contentValue}
 				onChange={(e) => {
 					setContentValue(e.currentTarget.value);

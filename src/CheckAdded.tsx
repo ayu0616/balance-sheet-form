@@ -26,13 +26,37 @@ const CheckAdded = (props: { containerCss: CSSProperties }) => {
 	const apiKey = "AIzaSyBh6fWBIDR8nZvucod3Fe77Ro4Hd3xtjO8";
 	const jsonUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=${apiKey}`;
 
+	const deleteDouble = (array: any[]) => {
+		const newArr = array;
+		let h, i, j: number;
+		for (h = 0; h < array.length; h++) {
+			var curItem = array[h];
+			var foundCount = 0;
+			// search array for item
+			for (i = 0; i < array.length; i++) {
+				if (array[i] == array[h]) foundCount++;
+			}
+			if (foundCount > 1) {
+				// remove repeated item from new array
+				for (j = 0; j < newArr.length; j++) {
+					if (newArr[j] == curItem) {
+						newArr.splice(j, 1);
+						j--;
+					}
+				}
+			}
+		}
+		return newArr;
+	};
+
 	useEffect(() => {
 		$.getJSON(jsonUrl).done((json) => {
-			const data = json.values;
+			const data: string[][] = json.values.map((x: string[]) => { x.shift(); return x;});
 			data.shift();
-			setSpreadSheetData(data);
-			setCount(data.length);
-			changeInfoText(data.length);
+			const dataOnlyUnique = deleteDouble(data.map((x) => x.toString())).map((x) => x.split(","));
+			setSpreadSheetData(dataOnlyUnique);
+			setCount(dataOnlyUnique.length);
+			changeInfoText(dataOnlyUnique.length);
 		});
 	}, []);
 
