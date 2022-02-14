@@ -27,31 +27,32 @@ const CheckAdded = (props: { containerCss: CSSProperties }) => {
 	const jsonUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=${apiKey}`;
 
 	const deleteDouble = (array: any[]) => {
-		const newArr = array;
-		let h, i, j: number;
-		for (h = 0; h < array.length; h++) {
-			var curItem = array[h];
-			var foundCount = 0;
-			// search array for item
-			for (i = 0; i < array.length; i++) {
-				if (array[i] == array[h]) foundCount++;
-			}
-			if (foundCount > 1) {
-				// remove repeated item from new array
-				for (j = 0; j < newArr.length; j++) {
-					if (newArr[j] == curItem) {
-						newArr.splice(j, 1);
-						j--;
-					}
-				}
-			}
+		/**重複している要素の順番リスト */
+		const doubleIndex = [];
+		// 重複している要素の順番をリストに格納
+		for (let i = 0; i < array.length; i++) {
+			/**それ以外の要素が入った配列 */
+			const arr = Array.from(array);
+			arr.splice(i, 1);
+			if (arr.includes(array[i])) doubleIndex.push(i);
+		}
+		/**returnする配列*/
+		const newArr = Array.from(array);
+		/**累積回数 */
+		let accumulate = 0;
+		for (let j of doubleIndex) {
+			newArr.splice(j - accumulate, 1);
+			accumulate++;
 		}
 		return newArr;
 	};
 
 	useEffect(() => {
 		$.getJSON(jsonUrl).done((json) => {
-			const data: string[][] = json.values.map((x: string[]) => { x.shift(); return x;});
+			const data: string[][] = json.values.map((x: string[]) => {
+				x.shift();
+				return x;
+			});
 			data.shift();
 			const dataOnlyUnique = deleteDouble(data.map((x) => x.toString())).map((x) => x.split(","));
 			setSpreadSheetData(dataOnlyUnique);

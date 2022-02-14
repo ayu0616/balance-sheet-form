@@ -55,7 +55,7 @@ const AddedValues = (props: { addedData: string[]; onClick: () => void }) => {
 			"entry.404340766": dataDict.way,
 			"entry.1171936216": kindValue,
 			"entry.1297137810": contentValue,
-			"entry.321306606": dataDict.id,
+			"entry.321306606": dataDict.amount,
 		};
 		$.ajax({
 			url: "https://not-cors.herokuapp.com/" + "https://docs.google.com/forms/u/0/d/e/1FAIpQLScW_qpNvlhLDsAMQX4TPvZdviPPj4LcIN0xGVB9Gzt5op5Uaw/formResponse",
