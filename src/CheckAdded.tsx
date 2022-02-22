@@ -48,8 +48,8 @@ const CheckAdded = (props: { containerCss: CSSProperties }) => {
 	};
 
 	useEffect(() => {
-		$.getJSON(jsonUrl).done((json) => {
-			const data: string[][] = json.values.map((x: string[]) => {
+		$.getJSON(jsonUrl).done((json: { values: string[][] }) => {
+			const data: string[][] = json.values.map((x) => {
 				x.shift();
 				return x;
 			});
@@ -66,9 +66,9 @@ const CheckAdded = (props: { containerCss: CSSProperties }) => {
 			<div className="p-3">
 				<h2>自動追加</h2>
 				<p>{infoText}</p>
-				{spreadSheetData.map((data, index) => {
-					return <AddedValues addedData={data} onClick={btnOnClick} key={index} />;
-				})}
+				{spreadSheetData.map((data, index) => (
+					<AddedValues addedData={data} onClick={btnOnClick} key={index} />
+				))}
 			</div>
 		</div>
 	);

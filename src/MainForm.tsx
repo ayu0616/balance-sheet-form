@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { DateInput, CashBankInput, KindInput, ContentInput, AmountInput } from "./InputAreas";
 import $ from "jquery";
 import { useState } from "react";
+import { notCorsUrl } from "./helper";
 
 const MainForm = () => {
 	const [kindValue, setKindValue] = useState("");
@@ -66,13 +67,13 @@ const MainForm = () => {
 			reversedData["entry.321306606"] = (Number(reversedData["entry.321306606"]) * -1).toString();
 			// 送信する
 			$.ajax({
-				url: "https://not-cors.herokuapp.com/" + "https://docs.google.com/forms/u/0/d/e/1FAIpQLScW_qpNvlhLDsAMQX4TPvZdviPPj4LcIN0xGVB9Gzt5op5Uaw/formResponse",
+				url: notCorsUrl + "https://docs.google.com/forms/u/0/d/e/1FAIpQLScW_qpNvlhLDsAMQX4TPvZdviPPj4LcIN0xGVB9Gzt5op5Uaw/formResponse",
 				method: "post",
 				data: reversedData,
 			});
 		}
 		$.ajax({
-			url: "https://not-cors.herokuapp.com/" + "https://docs.google.com/forms/u/0/d/e/1FAIpQLScW_qpNvlhLDsAMQX4TPvZdviPPj4LcIN0xGVB9Gzt5op5Uaw/formResponse",
+			url: notCorsUrl + "https://docs.google.com/forms/u/0/d/e/1FAIpQLScW_qpNvlhLDsAMQX4TPvZdviPPj4LcIN0xGVB9Gzt5op5Uaw/formResponse",
 			method: "post",
 			data: sendData,
 		})
