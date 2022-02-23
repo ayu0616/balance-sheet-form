@@ -74,21 +74,21 @@ const AddedValues = (props: { addedData: string[]; onClick: () => void }) => {
 
 	// 自動で入力
 	useEffect(() => {
+		/**入力するデータ */
+		const data = { kind: "", content: "" };
 		// 楽天ラッキーくじ
 		if (dataDict.way == "楽天ポイント" && dataDict.content.includes("くじ") && Number(dataDict.amount) > 0) {
-			// データを入力
-			setKindValue("収入");
-			setContentValue("楽天ラッキーくじ");
-			// 送信する
-			buttonOnClick();
+			data.kind = "収入";
+			data.content = "楽天ラッキーくじ";
 		}
+		// モバイルSuica
 		if (dataDict.content.includes("ﾓﾊﾞｲﾙｽｲｶ") && Number(dataDict.amount) < 0) {
-			// データを入力
-			setKindValue("交通費");
-			setContentValue("モバイルSuicaチャージ");
-			// 送信する
-			buttonOnClick();
+			data.kind = "交通費";
+			data.content = "モバイルSuicaチャージ";
 		}
+		// 実際に入力する
+		setKindValue(data.kind)
+		setContentValue(data.content)
 	}, [dataDict.amount]);
 
 	/**送信ボタンをクリックした時の動作 */

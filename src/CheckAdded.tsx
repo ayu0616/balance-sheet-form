@@ -3,7 +3,7 @@ import AddedValues from "./AddedValues";
 import $ from "jquery";
 
 const CheckAdded = (props: { containerCss: CSSProperties }) => {
-	const [spreadSheetData, setSpreadSheetData] = useState([[""]]);
+	const [spreadSheetData, setSpreadSheetData] = useState([new Array(6).fill("")]);
 
 	const [count, setCount] = useState(0);
 	const noValueText = "追加された項目はありません";
