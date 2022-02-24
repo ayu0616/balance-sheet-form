@@ -26,7 +26,10 @@ const AddedValues = (props: { addedData: string[]; onClick: () => void }) => {
 	// 種別の初期値を設定する
 	useEffect(() => {
 		// 金額がプラスなら種別を「収入」に設定する
-		if (Number(dataDict.amount) > 0) setKindValue("収入");
+		if (Number(dataDict.amount) > 0) {
+			console.log(Number(dataDict.amount));
+			setKindValue("収入");
+		}
 	}, [dataDict.amount]);
 	const [contentValue, setContentValue] = useState("");
 
@@ -74,21 +77,26 @@ const AddedValues = (props: { addedData: string[]; onClick: () => void }) => {
 
 	// 自動で入力
 	useEffect(() => {
-		/**入力するデータ */
-		const data = { kind: "", content: "" };
+		const setValues = (kind: string, content: string) => {
+			setKindValue(kind);
+			setContentValue(content);
+		};
 		// 楽天ラッキーくじ
 		if (dataDict.way == "楽天ポイント" && dataDict.content.includes("くじ") && Number(dataDict.amount) > 0) {
-			data.kind = "収入";
-			data.content = "楽天ラッキーくじ";
+			setValues("収入", "楽天ラッキーくじ")
+		}
+		// 楽天リワード
+		if (dataDict.way == "楽天ポイント" && dataDict.content.includes("楽天リワード") && Number(dataDict.amount) > 0) {
+			setValues("収入", "楽天リワード");
 		}
 		// モバイルSuica
 		if (dataDict.content.includes("ﾓﾊﾞｲﾙｽｲｶ") && Number(dataDict.amount) < 0) {
-			data.kind = "交通費";
-			data.content = "モバイルSuicaチャージ";
+			setValues("交通費", "モバイルSuica");
 		}
-		// 実際に入力する
-		setKindValue(data.kind)
-		setContentValue(data.content)
+		// iPhone11の分割
+		if (dataDict.content == "DF.ﾍﾟｲﾃﾞｲ-" && Number(dataDict.amount) < 0) {
+			setValues("趣味", "iPhone11分割");
+		}
 	}, [dataDict.amount]);
 
 	/**送信ボタンをクリックした時の動作 */
