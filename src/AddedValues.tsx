@@ -91,7 +91,7 @@ const AddedValues = (props: { addedData: string[]; onClick: () => void }) => {
 		}
 		// モバイルSuica
 		if (dataDict.content.includes("ﾓﾊﾞｲﾙｽｲｶ") && Number(dataDict.amount) < 0) {
-			setValues("交通費", "モバイルSuica");
+			setValues("交通費", "モバイルSuicaチャージ");
 		}
 		// iPhone11の分割
 		if (dataDict.content == "DF.ﾍﾟｲﾃﾞｲ-" && Number(dataDict.amount) < 0) {
