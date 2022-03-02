@@ -1,4 +1,4 @@
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { DateInput, CashBankInput, KindInput, ContentInput, AmountInput } from "./InputAreas";
 import $ from "jquery";
@@ -12,7 +12,7 @@ const MainForm = () => {
 	const [submitButtonState, setSubmitButtonState] = useState(false);
 	const submitButtonTexts = {
 		normal: <span>送信</span>,
-		loading: <img src="./account_book/loading_animation.svg" height="24px"></img>,
+		loading: <Spinner size="sm" animation="border" />,
 	};
 	const [submitButtonText, setSubmitButtonText] = useState(submitButtonTexts.normal);
 
