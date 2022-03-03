@@ -1,6 +1,6 @@
 import $ from "jquery";
 import { useState } from "react";
-import { Accordion, Button, Col, Container, Row } from "react-bootstrap";
+import { Accordion, Col, Row } from "react-bootstrap";
 import AccordionBody from "react-bootstrap/esm/AccordionBody";
 import AccordionHeader from "react-bootstrap/esm/AccordionHeader";
 import AccordionItem from "react-bootstrap/esm/AccordionItem";
@@ -57,7 +57,7 @@ const CurrentAmount = () => {
 	const [flow, setFlow] = useState({ cash: "", bank: "", sum: "" });
 
 	const updateData = async () => {
-		$.getJSON(jsonUrl).done((json) => {
+		$.getJSON(jsonUrl).done((json: { values: string[][] }) => {
 			setBalance(getBalance(json.values));
 			setFlow(getFlow(json.values));
 		});
@@ -80,6 +80,9 @@ const CurrentAmount = () => {
 							<CurrentAmountValue title="現在の残高" cash={balance.cash} bank={balance.bank} sum={balance.sum}></CurrentAmountValue>
 							<CurrentAmountValue title="今月の収支" cash={flow.cash} bank={flow.bank} sum={flow.sum}></CurrentAmountValue>
 						</Row>
+						<div className="w-100 text-end">
+							<a href="https://docs.google.com/spreadsheets/d/1uwM7-NMiNbSnjRfVXhekLoKSFMFZt2zd_ZMksGRE_9U/edit#gid=219452251">スプレッドシートはここから</a>
+						</div>
 					</AccordionBody>
 				</AccordionItem>
 			</Accordion>
