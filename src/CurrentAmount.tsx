@@ -7,7 +7,7 @@ import AccordionItem from "react-bootstrap/esm/AccordionItem";
 
 const CurrentAmountValue = (props: { title: string; cash: string; bank: string; sum: string }) => {
 	return (
-		<Col className="rounded-3 m-3">
+		<Col>
 			<h3>{props.title}</h3>
 			<p className="m-0">現金：{props.cash}</p>
 			<p className="m-0">銀行：{props.bank}</p>
@@ -80,7 +80,7 @@ const CurrentAmount = () => {
 							<CurrentAmountValue title="現在の残高" cash={balance.cash} bank={balance.bank} sum={balance.sum}></CurrentAmountValue>
 							<CurrentAmountValue title="今月の収支" cash={flow.cash} bank={flow.bank} sum={flow.sum}></CurrentAmountValue>
 						</Row>
-						<div className="w-100 text-end">
+						<div className="w-100 text-end mt-3">
 							<a href="https://docs.google.com/spreadsheets/d/1uwM7-NMiNbSnjRfVXhekLoKSFMFZt2zd_ZMksGRE_9U/edit#gid=219452251">スプレッドシートはここから</a>
 						</div>
 					</AccordionBody>
