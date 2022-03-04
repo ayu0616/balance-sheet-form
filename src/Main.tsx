@@ -11,7 +11,7 @@ const Main = () => {
 	$(window).on("load", () => {
 		const width = window.innerWidth;
 		if (width > 800) {
-			setMainClass("d-flex justify-content-evenly");
+			setMainClass("d-flex justify-content-evenly mx-auto");
 			const height = window.innerHeight;
 			/**ヘッダー要素の高さ（paddingとmarginを除く） */
 			const headerHeight = $("#title-header").height();
@@ -29,7 +29,7 @@ const Main = () => {
 		}
 	});
 	return (
-		<main className={mainClass}>
+		<main className={mainClass} style={{ maxWidth: 1300 }}>
 			<SubContent containerCss={checkAddedCss} />
 			<MainContent />
 		</main>
