@@ -10,7 +10,7 @@ const Main = () => {
 
 	$(window).on("load", () => {
 		const width = window.innerWidth;
-		if (width > 850) {
+		if (width > 800) {
 			setMainClass("d-flex justify-content-evenly");
 			const height = window.innerHeight;
 			/**ヘッダー要素の高さ（paddingとmarginを除く） */
