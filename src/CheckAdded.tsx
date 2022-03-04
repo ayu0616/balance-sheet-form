@@ -2,7 +2,7 @@ import { CSSProperties, useEffect, useState } from "react";
 import AddedValues from "./AddedValues";
 import $ from "jquery";
 
-const CheckAdded = (props: { containerCss: CSSProperties }) => {
+const CheckAdded = () => {
 	const [spreadSheetData, setSpreadSheetData] = useState([["", "", "", "", "", ""]]);
 
 	const [count, setCount] = useState(0);
@@ -62,14 +62,12 @@ const CheckAdded = (props: { containerCss: CSSProperties }) => {
 	}, []);
 
 	return (
-		<div id="added-container" className="px-3 w-100 overflow-auto" style={props.containerCss}>
-			<div className="p-3">
-				<h2>自動追加</h2>
-				<p>{infoText}</p>
-				{spreadSheetData.map((data, index) => (
-					<AddedValues addedData={data} onClick={btnOnClick} key={index} />
-				))}
-			</div>
+		<div className="p-3">
+			<h2>自動追加</h2>
+			<p>{infoText}</p>
+			{spreadSheetData.map((data, index) => (
+				<AddedValues addedData={data} onClick={btnOnClick} key={index} />
+			))}
 		</div>
 	);
 };

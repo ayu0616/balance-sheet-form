@@ -1,8 +1,8 @@
 import MainContent from "./MainContent";
-import CheckAdded from "./CheckAdded";
 import { useState } from "react";
 import $ from "jquery";
 import { CSSProperties } from "react";
+import { SubContent } from "./SubContent";
 
 const Main = () => {
 	const [mainClass, setMainClass] = useState("");
@@ -10,7 +10,7 @@ const Main = () => {
 
 	$(window).on("load", () => {
 		const width = window.innerWidth;
-		if (width > 1000) {
+		if (width > 850) {
 			setMainClass("d-flex justify-content-evenly");
 			const height = window.innerHeight;
 			/**ヘッダー要素の高さ（paddingとmarginを除く） */
@@ -30,7 +30,7 @@ const Main = () => {
 	});
 	return (
 		<main className={mainClass}>
-			<CheckAdded containerCss={checkAddedCss} />
+			<SubContent containerCss={checkAddedCss} />
 			<MainContent />
 		</main>
 	);
