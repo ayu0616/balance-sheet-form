@@ -16,6 +16,7 @@ const CheckAdded = () => {
 			setInfoText(noValueText);
 		}
 	};
+	const [dataDisplay, setDataDisplay] = useState("d-none");
 	const btnOnClick = () => {
 		changeCount();
 		changeInfoText(count - 1);
@@ -55,6 +56,7 @@ const CheckAdded = () => {
 			});
 			data.shift();
 			const dataOnlyUnique = deleteDouble(data.map((x) => x.toString())).map((x) => x.split(","));
+			if (dataOnlyUnique.length != 0) setDataDisplay("");
 			setSpreadSheetData(dataOnlyUnique);
 			setCount(dataOnlyUnique.length);
 			changeInfoText(dataOnlyUnique.length);
@@ -65,9 +67,11 @@ const CheckAdded = () => {
 		<div className="p-3">
 			<h2>自動追加</h2>
 			<p>{infoText}</p>
-			{spreadSheetData.map((data, index) => (
-				<AddedValues addedData={data} onClick={btnOnClick} key={index} />
-			))}
+			<div className={dataDisplay}>
+				{spreadSheetData.map((data, index) => (
+					<AddedValues addedData={data} onClick={btnOnClick} key={index} />
+				))}
+			</div>
 		</div>
 	);
 };

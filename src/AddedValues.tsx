@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form, FormControl } from "react-bootstrap";
 import $ from "jquery";
 import { kindOptions, notCorsUrl } from "./helper";
@@ -83,7 +83,7 @@ const AddedValues = (props: { addedData: string[]; onClick: () => void }) => {
 		};
 		// 楽天ラッキーくじ
 		if (dataDict.way == "楽天ポイント" && dataDict.content.includes("くじ") && Number(dataDict.amount) > 0) {
-			setValues("収入", "楽天ラッキーくじ")
+			setValues("収入", "楽天ラッキーくじ");
 		}
 		// 楽天リワード
 		if (dataDict.way == "楽天ポイント" && dataDict.content.includes("楽天リワード") && Number(dataDict.amount) > 0) {
@@ -110,9 +110,18 @@ const AddedValues = (props: { addedData: string[]; onClick: () => void }) => {
 		sendMainForm();
 	};
 
+	/**削除ボタンを押した時の動作 */
+	const deleteValue = () => {
+		const conf = window.confirm("削除しますか？");
+		if (!conf) return;
+		setFormClass("d-none");
+		props.onClick();
+		sendSubForm();
+	};
+
 	return (
 		<Form className={formClass}>
-			<p>
+			<p className="d-flex">
 				{dataDict.date} {dataDict.way}（{dataDict.amount}円）
 			</p>
 			<Form.Select
@@ -136,7 +145,12 @@ const AddedValues = (props: { addedData: string[]; onClick: () => void }) => {
 					setContentValue(e.currentTarget.value);
 				}}
 			/>
-			<Button onClick={buttonOnClick}>送信</Button>
+			<div className="d-flex justify-content-between">
+				<Button variant="danger" onClick={deleteValue}>
+					削除
+				</Button>
+				<Button onClick={buttonOnClick}>送信</Button>
+			</div>
 		</Form>
 	);
 };
