@@ -2,10 +2,15 @@ import { Button, Form, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { DateInput, CashBankInput, KindInput, ContentInput, AmountInput } from "./InputAreas";
 import $ from "jquery";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { notCorsUrl } from "./helper";
 
 const MainForm = () => {
+	const today = new Date();
+
+	const [monthValue, setMonthValue] = useState(today.getMonth() + 1);
+	const [dayValue, setDayValue] = useState(today.getDate());
+	const [cashOrBankValue, setCashOrBankValue] = useState("現金");
 	const [kindValue, setKindValue] = useState("");
 	const [contentValue, setContentValue] = useState("");
 	const [amountValue, setAmountValue] = useState("");
@@ -16,6 +21,11 @@ const MainForm = () => {
 	};
 	const [submitButtonText, setSubmitButtonText] = useState(submitButtonTexts.normal);
 
+	const setDateValue = (value:{ month: number; day: number }) => {
+		setMonthValue(value.month)
+		setDayValue(value.day)
+	}
+
 	const kindOnChange = (value: string) => {
 		setKindValue(value);
 		if (["出金", "入金"].includes(value)) {
@@ -23,11 +33,10 @@ const MainForm = () => {
 		}
 	};
 
-	const today = new Date();
 	const data = {
-		month: today.getMonth() + 1,
-		day: today.getDate(),
-		cashOrBank: "現金",
+		month: monthValue,
+		day: dayValue,
+		cashOrBank: cashOrBankValue,
 		kind: kindValue,
 		content: contentValue,
 		amount: Number(amountValue),
@@ -95,8 +104,8 @@ const MainForm = () => {
 	return (
 		<Form id="main-form" className="p-3">
 			<h2>入力フォーム</h2>
-			<DateInput data={data} />
-			<CashBankInput data={data} />
+			<DateInput values={{ month: monthValue, day: dayValue }} onChange={setDateValue} />
+			<CashBankInput value={cashOrBankValue} onChange={setCashOrBankValue} />
 			<KindInput value={kindValue} kindOnChange={kindOnChange} />
 			<ContentInput value={contentValue} contentOnChange={setContentValue} />
 			<AmountInput value={amountValue} amountOnChange={setAmountValue} />

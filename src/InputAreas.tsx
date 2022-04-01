@@ -12,7 +12,7 @@ type dataType = {
 	amount: number;
 };
 
-const DateInput = (props: { data: dataType }) => {
+const DateInput = (props: { values: { month: number; day: number }; onChange: (values: { month: number; day: number }) => void }) => {
 	const [date, setDate] = useState(new Date());
 	const [month, setMonth] = useState(date.getMonth() + 1);
 	const [day, setDay] = useState(date.getDate());
@@ -21,8 +21,7 @@ const DateInput = (props: { data: dataType }) => {
 		setMonth(dateToChange.getMonth() + 1);
 		setDay(dateToChange.getDate());
 		changeButtonState(dateToChange);
-		props.data.month = dateToChange.getMonth() + 1;
-		props.data.day = dateToChange.getDate();
+		props.onChange({ month: dateToChange.getMonth() + 1, day: dateToChange.getDate() });
 	};
 
 	const dateUp = () => {
@@ -112,35 +111,16 @@ const DateInput = (props: { data: dataType }) => {
 	);
 };
 
-const CashBankInput = (props: { data: dataType }) => {
+const CashBankInput = (props: { value: string; onChange: (value: string) => void }) => {
 	return (
 		<FormGroup>
 			<p className="m-0">現金／銀行・カード</p>
 			<ButtonGroup className="mt-3 w-100">
-				<input
-					id="cash"
-					className="btn-check"
-					type="radio"
-					name="cash-or-bank-radio"
-					value="現金"
-					defaultChecked
-					onClick={(e) => {
-						props.data.cashOrBank = e.currentTarget.value;
-					}}
-				/>
+				<input id="cash" className="btn-check" type="radio" name="cash-or-bank-radio" value="現金" defaultChecked onClick={(e) => props.onChange(e.currentTarget.value)} />
 				<label htmlFor="cash" className="btn btn-outline-primary w-50">
 					現金
 				</label>
-				<input
-					id="bank"
-					className="btn-check"
-					type="radio"
-					name="cash-or-bank-radio"
-					value="銀行・カード"
-					onClick={(e) => {
-						props.data.cashOrBank = e.currentTarget.value;
-					}}
-				/>
+				<input id="bank" className="btn-check" type="radio" name="cash-or-bank-radio" value="銀行・カード" onClick={(e) => props.onChange(e.currentTarget.value)} />
 				<label htmlFor="bank" className="btn btn-outline-primary w-50">
 					銀行・カード
 				</label>
