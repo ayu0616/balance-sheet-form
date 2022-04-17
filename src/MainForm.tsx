@@ -109,7 +109,7 @@ const MainForm = () => {
 			<KindInput value={kindValue} kindOnChange={kindOnChange} />
 			<ContentInput value={contentValue} contentOnChange={setContentValue} />
 			<AmountInput value={amountValue} amountOnChange={setAmountValue} />
-			<Button className="w-100" onClick={btnOnClick} disabled={submitButtonState}>
+			<Button className="w-100 mb-3" onClick={btnOnClick} disabled={submitButtonState}>
 				{submitButtonText}
 			</Button>
 		</Form>
