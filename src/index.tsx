@@ -1,17 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
-import reportWebVitals from "./reportWebVitals";
-import Main from "./Main";
 import Header from "./Header";
+import "./index.css";
+import Main from "./Main";
+import reportWebVitals from "./reportWebVitals";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 ReactDOM.render(
-	<React.StrictMode>
-		<Header />
-		<Main />
-	</React.StrictMode>,
-	document.getElementById("root")
+    <React.StrictMode>
+        <Header />
+        <Main />
+    </React.StrictMode>,
+    document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change
