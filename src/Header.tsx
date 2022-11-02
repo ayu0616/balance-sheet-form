@@ -22,7 +22,7 @@ const Header = () => {
                         style={{ cursor: "pointer" }}
                     >
                         お小遣い帳入力フォーム
-                    </a>
+                    </span>
                 </h1>
             </div>
         </header>
