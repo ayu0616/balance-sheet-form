@@ -1,17 +1,28 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import $ from "jquery";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form, Spinner } from "react-bootstrap";
-import { notCorsUrl } from "./helper";
-import { AmountInput, CashBankInput, ContentInput, DateInput, KindInput } from "./InputAreas";
+import { GOOGLE_FORM_NAMES, GOOGLE_FORM_URL, NOT_CORS_URL, SHEET_DATA_URL } from "./constants";
+import { AmountInput, ContentInput, DateInput, KarikataInput, KashikataInput } from "./InputAreas";
 
 const MainForm = () => {
     const today = new Date();
 
+    const [accountTitles, setAccountTitles] = useState<string[]>([]);
+    useEffect(() => {
+        $.ajax({
+            url: SHEET_DATA_URL,
+            method: "get",
+        }).done((data: string) => {
+            const rows = data.split("\n");
+            setAccountTitles(rows.map((row) => row.split(",")[0]));
+        });
+    });
+
     const [monthValue, setMonthValue] = useState(today.getMonth() + 1);
     const [dayValue, setDayValue] = useState(today.getDate());
-    const [cashOrBankValue, setCashOrBankValue] = useState("現金");
-    const [kindValue, setKindValue] = useState("");
+    const [karikataValue, setKarikataValue] = useState("");
+    const [kashikataValue, setKashikataValue] = useState("");
     const [contentValue, setContentValue] = useState("");
     const [amountValue, setAmountValue] = useState("");
     const [submitButtonState, setSubmitButtonState] = useState(false);
@@ -26,18 +37,19 @@ const MainForm = () => {
         setDayValue(value.day);
     };
 
-    const kindOnChange = (value: string) => {
-        setKindValue(value);
-        if (["出金", "入金"].includes(value)) {
-            setContentValue(value);
-        }
+    const karikataOnChange = (value: string) => {
+        setKarikataValue(value);
+    };
+
+    const kashikataOnChange = (value: string) => {
+        setKashikataValue(value);
     };
 
     const data = {
         month: monthValue,
         day: dayValue,
-        cashOrBank: cashOrBankValue,
-        kind: kindValue,
+        karikata: karikataValue,
+        kashikata: kashikataValue,
         content: contentValue,
         amount: Number(amountValue),
     };
@@ -45,51 +57,32 @@ const MainForm = () => {
     /**ボタンをクリックしたら */
     const btnOnClick = () => {
         // 入力値が不適切ならreturn
-        if (data.kind === "" || data.content === "" || isNaN(data.amount) || data.amount <= 0) {
+        if (data.karikata === "" || data.kashikata === "" || data.content === "" || isNaN(data.amount) || data.amount <= 0) {
             return;
-        }
-        // 銀行とのやり取りなら方法は「現金」に
-        if (["出金", "入金"].includes(data.kind)) {
-            data.cashOrBank = "現金";
-        }
-        // プラスマイナス調整
-        if (!["収入", "出金"].includes(data.kind)) {
-            data.amount *= -1;
         }
         /**送信するデータ */
         const sendData = {
-            "entry.143907117": `${data.month}月${data.day}日`,
-            "entry.404340766": data.cashOrBank,
-            "entry.1171936216": data.kind,
-            "entry.1297137810": data.content,
-            "entry.321306606": data.amount.toString(),
+            [GOOGLE_FORM_NAMES.date]: `2022/${data.month}/${data.day}`,
+            [GOOGLE_FORM_NAMES.karikata]: data.karikata,
+            [GOOGLE_FORM_NAMES.kashikata]: data.kashikata,
+            [GOOGLE_FORM_NAMES.amount]: data.amount.toString(),
+            [GOOGLE_FORM_NAMES.content]: data.content,
         };
         // ボタンを押せないように
         setSubmitButtonState(true);
         // ボタンをロード画面に
         setSubmitButtonText(submitButtonTexts.loading);
         // 銀行とのやり取りなら、方法とプラスマイナスを逆転したデータを送信する
-        if (["出金", "入金"].includes(data.kind)) {
-            /**逆転するデータ */
-            const reversedData = { ...sendData };
-            reversedData["entry.404340766"] = "銀行・カード";
-            reversedData["entry.321306606"] = (Number(reversedData["entry.321306606"]) * -1).toString();
-            // 送信する
-            $.ajax({
-                url: `${notCorsUrl}https://docs.google.com/forms/u/0/d/e/1FAIpQLScW_qpNvlhLDsAMQX4TPvZdviPPj4LcIN0xGVB9Gzt5op5Uaw/formResponse`,
-                method: "post",
-                data: reversedData,
-            });
-        }
         $.ajax({
-            url: `${notCorsUrl}https://docs.google.com/forms/u/0/d/e/1FAIpQLScW_qpNvlhLDsAMQX4TPvZdviPPj4LcIN0xGVB9Gzt5op5Uaw/formResponse`,
+            url: NOT_CORS_URL + GOOGLE_FORM_URL,
             method: "post",
             data: sendData,
         })
             .done(() => {
                 // 通知を表示し、入力値を消去する
                 alert("送信完了しました");
-                setKindValue("");
+                setKarikataValue("");
+                setKashikataValue("");
                 setContentValue("");
                 setAmountValue("");
             })
@@ -105,10 +98,10 @@ const MainForm = () => {
         <Form id="main-form" className="p-3">
             <h2>入力フォーム</h2>
             <DateInput values={{ month: monthValue, day: dayValue }} onChange={setDateValue} />
-            <CashBankInput value={cashOrBankValue} onChange={setCashOrBankValue} />
-            <KindInput value={kindValue} kindOnChange={kindOnChange} />
-            <ContentInput value={contentValue} contentOnChange={setContentValue} />
-            <AmountInput value={amountValue} amountOnChange={setAmountValue} />
+            <KarikataInput id="karikata" value={karikataValue} karikataOnChange={karikataOnChange} accountTitles={accountTitles} />
+            <KashikataInput id="kashikata" value={kashikataValue} kashikataOnChange={kashikataOnChange} accountTitles={accountTitles} />
+            <AmountInput id="amount" value={amountValue} amountOnChange={setAmountValue} />
+            <ContentInput id="content" value={contentValue} contentOnChange={setContentValue} />
             <Button className="w-100 mb-3" onClick={btnOnClick} disabled={submitButtonState}>
                 {submitButtonText}
             </Button>
