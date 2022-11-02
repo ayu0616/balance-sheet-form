@@ -17,7 +17,7 @@ const MainForm = () => {
             const rows = data.split("\n");
             setAccountTitles(rows.map((row) => row.split(",")[0]));
         });
-    });
+    }, []);
 
     const [monthValue, setMonthValue] = useState(today.getMonth() + 1);
     const [dayValue, setDayValue] = useState(today.getDate());
