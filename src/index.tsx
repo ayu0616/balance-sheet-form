@@ -1,15 +1,26 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Header from "./Header";
-import "./style/index.scss";
 import Main from "./Main";
 import reportWebVitals from "./reportWebVitals";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import "./style/index.scss";
 
 ReactDOM.render(
     <React.StrictMode>
         <Header />
         <Main />
+        <iframe
+        title="google form"
+            src="https://docs.google.com/forms/d/e/1FAIpQLSeBETN_CleUHfVUtf77pMlWdPpoB1xNLt8kXIFidxX_yecRcw/viewform?embedded=true"
+            width="640"
+            height="1144"
+            frameBorder="0"
+            marginHeight={0}
+            marginWidth={0}
+        >
+            読み込んでいます…
+        </iframe>
     </React.StrictMode>,
     document.getElementById("root")
 );

@@ -62,7 +62,9 @@ const MainForm = () => {
         }
         /**送信するデータ */
         const sendData = {
-            [GOOGLE_FORM_NAMES.date]: `2022/${data.month}/${data.day}`,
+            [GOOGLE_FORM_NAMES.year]: new Date().getFullYear(),
+            [GOOGLE_FORM_NAMES.month]: data.month,
+            [GOOGLE_FORM_NAMES.day]: data.day,
             [GOOGLE_FORM_NAMES.karikata]: data.karikata,
             [GOOGLE_FORM_NAMES.kashikata]: data.kashikata,
             [GOOGLE_FORM_NAMES.amount]: data.amount.toString(),
