@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Button, ButtonGroup, Form, FormControl, InputGroup } from "react-bootstrap";
 import FormGroup from "./FormGroup";
-import { kindOptions } from "./helper";
 
 // type dataType = {
 //     month: number;
@@ -144,9 +143,9 @@ const CashBankInput = (props: { value: string; onChange: (value: string) => void
     );
 };
 
-const KindInput = (props: { value: string; kindOnChange: (value: string) => void }) => {
+const AccountTitleInput = (props: { value: string; onChange: (value: string) => void; id: string; title: string; accountTitles: string[] }) => {
     const optionElems: JSX.IntrinsicElements["option"][] = [];
-    kindOptions.forEach((option, index) => {
+    props.accountTitles.forEach((option, index) => {
         optionElems.push(
             <option value={option} key={index + 1}>
                 {option}
@@ -156,12 +155,13 @@ const KindInput = (props: { value: string; kindOnChange: (value: string) => void
 
     return (
         <FormGroup>
-            <Form.Label>種別</Form.Label>
+            <Form.Label htmlFor={props.id}>{props.title}</Form.Label>
             <Form.Select
+                id={props.id}
                 value={props.value}
                 onChange={(e) => {
                     const currentVal = e.currentTarget.value;
-                    props.kindOnChange(currentVal);
+                    props.onChange(currentVal);
                 }}
             >
                 <>
@@ -175,11 +175,20 @@ const KindInput = (props: { value: string; kindOnChange: (value: string) => void
     );
 };
 
-const ContentInput = (props: { value: string; contentOnChange: (value: string) => void }) => {
+const KarikataInput = (props: { value: string; karikataOnChange: (value: string) => void; id: string; accountTitles: string[] }) => {
+    return <AccountTitleInput value={props.value} onChange={props.karikataOnChange} id={props.id} title="借方" accountTitles={props.accountTitles} />;
+};
+
+const KashikataInput = (props: { value: string; kashikataOnChange: (value: string) => void; id: string; accountTitles: string[] }) => {
+    return <AccountTitleInput value={props.value} onChange={props.kashikataOnChange} id={props.id} title="貸方" accountTitles={props.accountTitles} />;
+};
+
+const ContentInput = (props: { value: string; contentOnChange: (value: string) => void; id: string }) => {
     return (
         <FormGroup>
-            <Form.Label>内容</Form.Label>
+            <Form.Label htmlFor={props.id}>内容</Form.Label>
             <Form.Control
+                id={props.id}
                 value={props.value}
                 onChange={(e) => {
                     const currentVal = e.currentTarget.value;
@@ -190,12 +199,13 @@ const ContentInput = (props: { value: string; contentOnChange: (value: string) =
     );
 };
 
-const AmountInput = (props: { value: string; amountOnChange: (value: string) => void }) => {
+const AmountInput = (props: { value: string; amountOnChange: (value: string) => void; id: string }) => {
     return (
         <FormGroup>
-            <Form.Label>金額</Form.Label>
+            <Form.Label htmlFor={props.id}>金額</Form.Label>
             <InputGroup>
                 <Form.Control
+                    id={props.id}
                     type="tel"
                     value={props.value}
                     onChange={(e) => {
@@ -213,4 +223,4 @@ const AmountInput = (props: { value: string; amountOnChange: (value: string) => 
     );
 };
 
-export { DateInput, CashBankInput, KindInput, ContentInput, AmountInput };
+export { DateInput, CashBankInput, KarikataInput, KashikataInput, ContentInput, AmountInput };

@@ -1,7 +1,7 @@
 import $ from "jquery";
 import { useEffect, useState } from "react";
 import { Button, Form, FormControl } from "react-bootstrap";
-import { kindOptions, notCorsUrl } from "./helper";
+import {  NOT_CORS_URL } from "./constants";
 
 // type addedDataType = {
 //     date: string;
@@ -34,13 +34,13 @@ const AddedValues = (props: { addedData: string[]; onClick: () => void }) => {
     const [contentValue, setContentValue] = useState("");
 
     const optionElems: JSX.IntrinsicElements["option"][] = [];
-    kindOptions.forEach((option, index) => {
-        optionElems.push(
-            <option value={option} key={index + 1}>
-                {option}
-            </option>
-        );
-    });
+    // kindOptions.forEach((option, index) => {
+    //     optionElems.push(
+    //         <option value={option} key={index + 1}>
+    //             {option}
+    //         </option>
+    //     );
+    // });
 
     /**「自動追加」に送信 */
     const sendSubForm = () => {
@@ -53,7 +53,7 @@ const AddedValues = (props: { addedData: string[]; onClick: () => void }) => {
             "entry.2061631037": dataDict.id,
         };
         $.ajax({
-            url: `${notCorsUrl}https://docs.google.com/forms/u/0/d/e/1FAIpQLSeN_YxlXOgLL9LKzEjG-NuTAQy7BPTBglSWZw5afw1x-V0uZQ/formResponse`,
+            url: `${NOT_CORS_URL}https://docs.google.com/forms/u/0/d/e/1FAIpQLSeN_YxlXOgLL9LKzEjG-NuTAQy7BPTBglSWZw5afw1x-V0uZQ/formResponse`,
             method: "post",
             data: subFormData,
         });
@@ -69,7 +69,7 @@ const AddedValues = (props: { addedData: string[]; onClick: () => void }) => {
             "entry.321306606": dataDict.amount,
         };
         $.ajax({
-            url: `${notCorsUrl}https://docs.google.com/forms/u/0/d/e/1FAIpQLScW_qpNvlhLDsAMQX4TPvZdviPPj4LcIN0xGVB9Gzt5op5Uaw/formResponse`,
+            url: `${NOT_CORS_URL}https://docs.google.com/forms/u/0/d/e/1FAIpQLScW_qpNvlhLDsAMQX4TPvZdviPPj4LcIN0xGVB9Gzt5op5Uaw/formResponse`,
             method: "post",
             data: mainFormData,
         });
