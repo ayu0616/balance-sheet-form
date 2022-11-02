@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import $ from "jquery";
 import { useEffect, useState } from "react";
 import { Button, Form, Spinner } from "react-bootstrap";
-import { GOOGLE_FORM_NAMES, GOOGLE_FORM_URL, NOT_CORS_URL, SHEET_DATA_URL } from "./constants";
+import { GOOGLE_FORM_NAMES, GOOGLE_FORM_URL, NOT_CORS_URL, SHEET_DATA_URL } from "../settings/constants";
 import { AmountInput, ContentInput, DateInput, KarikataInput, KashikataInput } from "./InputAreas";
 
 const MainForm = () => {
