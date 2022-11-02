@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/account_book/static/css/main.824cbd4e.css",
-    "main.js": "/account_book/static/js/main.3a535f1d.js",
-    "static/js/377.0ed652e3.chunk.js": "/account_book/static/js/377.0ed652e3.chunk.js",
-    "service-worker.js": "/account_book/service-worker.js",
-    "index.html": "/account_book/index.html",
-    "main.824cbd4e.css.map": "/account_book/static/css/main.824cbd4e.css.map",
-    "main.3a535f1d.js.map": "/account_book/static/js/main.3a535f1d.js.map",
-    "377.0ed652e3.chunk.js.map": "/account_book/static/js/377.0ed652e3.chunk.js.map"
+    "main.css": "/balance-sheet-form/static/css/main.576f668f.css",
+    "main.js": "/balance-sheet-form/static/js/main.a219afdf.js",
+    "static/js/496.7974d10c.chunk.js": "/balance-sheet-form/static/js/496.7974d10c.chunk.js",
+    "service-worker.js": "/balance-sheet-form/service-worker.js",
+    "index.html": "/balance-sheet-form/index.html",
+    "main.576f668f.css.map": "/balance-sheet-form/static/css/main.576f668f.css.map",
+    "main.a219afdf.js.map": "/balance-sheet-form/static/js/main.a219afdf.js.map",
+    "496.7974d10c.chunk.js.map": "/balance-sheet-form/static/js/496.7974d10c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.824cbd4e.css",
-    "static/js/main.3a535f1d.js"
+    "static/css/main.576f668f.css",
+    "static/js/main.a219afdf.js"
   ]
 }
