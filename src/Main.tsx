@@ -1,7 +1,7 @@
 import $ from "jquery";
 import { CSSProperties, useState } from "react";
-import MainContent from "./MainContent";
-import { SubContent } from "./SubContent";
+import MainContent from "./main/MainContent";
+import { SubContent } from "./sub/SubContent";
 
 const Main = () => {
     const [mainClass, setMainClass] = useState("");

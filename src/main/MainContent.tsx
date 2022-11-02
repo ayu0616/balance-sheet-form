@@ -1,4 +1,4 @@
-import MainForm from "./MainForm";
+import MainForm from "../forms/MainForm";
 
 const MainContent = () => {
     return (
