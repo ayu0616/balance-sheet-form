@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, ButtonGroup, Form, FormControl, InputGroup } from "react-bootstrap";
 import FormGroup from "./FormGroup";
+import "./style.scss";
 
 // type dataType = {
 //     month: number;
@@ -13,12 +14,8 @@ import FormGroup from "./FormGroup";
 
 const DateInput = (props: { values: { month: number; day: number }; onChange: (values: { month: number; day: number }) => void }) => {
     const [date, setDate] = useState(new Date());
-    const [month, setMonth] = useState(date.getMonth() + 1);
-    const [day, setDay] = useState(date.getDate());
 
     const changeDate = (dateToChange: Date) => {
-        setMonth(dateToChange.getMonth() + 1);
-        setDay(dateToChange.getDate());
         changeButtonState(dateToChange);
         props.onChange({ month: dateToChange.getMonth() + 1, day: dateToChange.getDate() });
     };
@@ -82,9 +79,9 @@ const DateInput = (props: { values: { month: number; day: number }; onChange: (v
         <FormGroup>
             <Form.Label>日付</Form.Label>
             <InputGroup>
-                <FormControl type="tel" value={month} onChange={() => {}} />
+                <FormControl type="tel" value={date.getMonth() + 1} onChange={() => {}} disabled={true} />
                 <InputGroup.Text>月</InputGroup.Text>
-                <FormControl type="tel" value={day} onChange={() => {}} />
+                <FormControl type="tel" value={date.getDate()} onChange={() => {}} disabled={true} />
                 <InputGroup.Text>日</InputGroup.Text>
                 <ButtonGroup vertical={true}>
                     <Button id="day-up" variant="secondary" onClick={dateUp}>
