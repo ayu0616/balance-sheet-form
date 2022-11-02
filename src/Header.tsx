@@ -8,7 +8,7 @@ const Header = () => {
         <header id="title-header" className="p-3 mb-3" style={headerCss}>
             <div className="w-100 mx-auto" style={{ maxWidth: 1300 }}>
                 <h1 className="my-0">
-                    <a
+                    <span
                         className="text-decoration-none text-reset"
                         onClick={() => {
                             // キャッシュを削除し更新する
