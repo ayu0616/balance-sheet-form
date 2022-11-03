@@ -19,8 +19,9 @@ const MainForm = () => {
         });
     }, []);
 
-    const [monthValue, setMonthValue] = useState(today.getMonth() + 1);
-    const [dayValue, setDayValue] = useState(today.getDate());
+    // const [monthValue, setMonthValue] = useState(today.getMonth() + 1);
+    // const [dayValue, setDayValue] = useState(today.getDate());
+    const [dateValue, setDateValue] = useState(today);
     const [karikataValue, setKarikataValue] = useState("");
     const [kashikataValue, setKashikataValue] = useState("");
     const [contentValue, setContentValue] = useState("");
@@ -32,11 +33,6 @@ const MainForm = () => {
     };
     const [submitButtonText, setSubmitButtonText] = useState(submitButtonTexts.normal);
 
-    const setDateValue = (value: { month: number; day: number }) => {
-        setMonthValue(value.month);
-        setDayValue(value.day);
-    };
-
     const karikataOnChange = (value: string) => {
         setKarikataValue(value);
     };
@@ -46,8 +42,7 @@ const MainForm = () => {
     };
 
     const data = {
-        month: monthValue,
-        day: dayValue,
+        date: dateValue,
         karikata: karikataValue,
         kashikata: kashikataValue,
         content: contentValue,
@@ -57,14 +52,14 @@ const MainForm = () => {
     /**ボタンをクリックしたら */
     const btnOnClick = () => {
         // 入力値が不適切ならreturn
-        if (data.karikata === "" || data.kashikata === "" || data.content === "" || isNaN(data.amount) || data.amount <= 0) {
+        if (data.karikata === "" || data.kashikata === "" || isNaN(data.amount) || data.amount <= 0) {
             return;
         }
         /**送信するデータ */
         const sendData = {
-            [GOOGLE_FORM_NAMES.year]: new Date().getFullYear(),
-            [GOOGLE_FORM_NAMES.month]: data.month,
-            [GOOGLE_FORM_NAMES.day]: data.day,
+            [GOOGLE_FORM_NAMES.year]: data.date.getFullYear(),
+            [GOOGLE_FORM_NAMES.month]: data.date.getMonth()+1,
+            [GOOGLE_FORM_NAMES.day]: data.date.getDate(),
             [GOOGLE_FORM_NAMES.karikata]: data.karikata,
             [GOOGLE_FORM_NAMES.kashikata]: data.kashikata,
             [GOOGLE_FORM_NAMES.amount]: data.amount.toString(),
@@ -99,7 +94,7 @@ const MainForm = () => {
     return (
         <Form id="main-form" className="p-3">
             <h2>入力フォーム</h2>
-            <DateInput values={{ month: monthValue, day: dayValue }} onChange={setDateValue} />
+            <DateInput value={dateValue} onChange={setDateValue} />
             <KarikataInput id="karikata" value={karikataValue} karikataOnChange={karikataOnChange} accountTitles={accountTitles} />
             <KashikataInput id="kashikata" value={kashikataValue} kashikataOnChange={kashikataOnChange} accountTitles={accountTitles} />
             <AmountInput id="amount" value={amountValue} amountOnChange={setAmountValue} />

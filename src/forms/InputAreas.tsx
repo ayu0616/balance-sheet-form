@@ -12,12 +12,12 @@ import "./style.scss";
 //     amount: number;
 // };
 
-const DateInput = (props: { values: { month: number; day: number }; onChange: (values: { month: number; day: number }) => void }) => {
+const DateInput = (props: { value: Date; onChange: (value: Date) => void }) => {
     const [date, setDate] = useState(new Date());
 
     const changeDate = (dateToChange: Date) => {
         changeButtonState(dateToChange);
-        props.onChange({ month: dateToChange.getMonth() + 1, day: dateToChange.getDate() });
+        props.onChange(dateToChange);
     };
 
     const dateUp = () => {
