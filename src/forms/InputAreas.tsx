@@ -79,9 +79,13 @@ const DateInput = (props: { values: { month: number; day: number }; onChange: (v
         <FormGroup>
             <Form.Label>日付</Form.Label>
             <InputGroup>
-                <FormControl type="tel" value={date.getMonth() + 1} onChange={() => {}} disabled={true} />
+                <FormControl value={date.getMonth() + 1} as="div">
+                    <span>{date.getMonth() + 1}</span>
+                </FormControl>
                 <InputGroup.Text>月</InputGroup.Text>
-                <FormControl type="tel" value={date.getDate()} onChange={() => {}} disabled={true} />
+                <FormControl value={date.getDate()} as="div">
+                    <span>{date.getDate()}</span>
+                </FormControl>
                 <InputGroup.Text>日</InputGroup.Text>
                 <ButtonGroup vertical={true}>
                     <Button id="day-up" variant="secondary" onClick={dateUp}>
@@ -204,7 +208,7 @@ const AmountInput = (props: { value: string; amountOnChange: (value: string) => 
                 <Form.Control
                     id={props.id}
                     inputMode="numeric"
-                    value={props.value.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,')}
+                    value={props.value.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")}
                     onChange={(e) => {
                         const currentVal = Number(e.currentTarget.value.replaceAll(",", ""));
                         if (isNaN(currentVal) || currentVal <= 0) {
