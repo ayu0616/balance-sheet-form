@@ -203,10 +203,10 @@ const AmountInput = (props: { value: string; amountOnChange: (value: string) => 
             <InputGroup>
                 <Form.Control
                     id={props.id}
-                    type="tel"
-                    value={props.value}
+                    inputMode="numeric"
+                    value={props.value.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,')}
                     onChange={(e) => {
-                        const currentVal = Number(e.currentTarget.value);
+                        const currentVal = Number(e.currentTarget.value.replaceAll(",", ""));
                         if (isNaN(currentVal) || currentVal <= 0) {
                             props.amountOnChange("");
                             return;
