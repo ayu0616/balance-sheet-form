@@ -1,0 +1,18 @@
+table.total-data-table {
+    margin-left: 1rem;
+
+    tbody {
+        tr.total-data-tr {
+            td.account-title-td {
+                width: 10rem;
+                padding-right: 1rem;
+                text-align-last: justify;
+            }
+
+            td.amount-td {
+                width: 5rem;
+                text-align: end;
+            }
+        }
+    }
+}
