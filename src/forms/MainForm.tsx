@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import $ from "jquery";
 import { useEffect, useState } from "react";
 import { Button, Form, Spinner } from "react-bootstrap";
-import { GOOGLE_FORM_NAMES, GOOGLE_FORM_URL, NOT_CORS_URL, SHEET_DATA_URL } from "../settings/constants";
+import { ACCOUNT_TITLES_URL, GOOGLE_FORM_NAMES, GOOGLE_FORM_URL, NOT_CORS_URL } from "../settings/constants";
 import { AmountInput, ContentInput, DateInput, KarikataInput, KashikataInput } from "./InputAreas";
 
 const MainForm = () => {
@@ -11,7 +11,7 @@ const MainForm = () => {
     const [accountTitles, setAccountTitles] = useState<string[]>([]);
     useEffect(() => {
         $.ajax({
-            url: SHEET_DATA_URL,
+            url: ACCOUNT_TITLES_URL,
             method: "get",
         }).done((data: string) => {
             const rows = data.split("\n");
@@ -58,7 +58,7 @@ const MainForm = () => {
         /**送信するデータ */
         const sendData = {
             [GOOGLE_FORM_NAMES.year]: data.date.getFullYear(),
-            [GOOGLE_FORM_NAMES.month]: data.date.getMonth()+1,
+            [GOOGLE_FORM_NAMES.month]: data.date.getMonth() + 1,
             [GOOGLE_FORM_NAMES.day]: data.date.getDate(),
             [GOOGLE_FORM_NAMES.karikata]: data.karikata,
             [GOOGLE_FORM_NAMES.kashikata]: data.kashikata,
