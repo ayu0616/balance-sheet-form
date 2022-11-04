@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/balance-sheet-form/static/css/main.5da10659.css",
-    "main.js": "/balance-sheet-form/static/js/main.597e5607.js",
+    "main.css": "/balance-sheet-form/static/css/main.2a318a8d.css",
+    "main.js": "/balance-sheet-form/static/js/main.d2b64dc2.js",
     "static/js/496.7974d10c.chunk.js": "/balance-sheet-form/static/js/496.7974d10c.chunk.js",
     "service-worker.js": "/balance-sheet-form/service-worker.js",
     "index.html": "/balance-sheet-form/index.html",
-    "main.5da10659.css.map": "/balance-sheet-form/static/css/main.5da10659.css.map",
-    "main.597e5607.js.map": "/balance-sheet-form/static/js/main.597e5607.js.map",
+    "main.2a318a8d.css.map": "/balance-sheet-form/static/css/main.2a318a8d.css.map",
+    "main.d2b64dc2.js.map": "/balance-sheet-form/static/js/main.d2b64dc2.js.map",
     "496.7974d10c.chunk.js.map": "/balance-sheet-form/static/js/496.7974d10c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.5da10659.css",
-    "static/js/main.597e5607.js"
+    "static/css/main.2a318a8d.css",
+    "static/js/main.d2b64dc2.js"
   ]
 }
