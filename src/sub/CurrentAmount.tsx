@@ -1,18 +1,29 @@
 import $ from "jquery";
 import { useState } from "react";
-import { Accordion, Col, Row } from "react-bootstrap";
+import { Accordion } from "react-bootstrap";
 import AccordionBody from "react-bootstrap/esm/AccordionBody";
 import AccordionHeader from "react-bootstrap/esm/AccordionHeader";
 import AccordionItem from "react-bootstrap/esm/AccordionItem";
+import { EDIT_SHEET_URL, TOTAL_DATA_URL } from "../settings/constants";
+import "./style.scss"
 
-const CurrentAmountValue = (props: { title: string; cash: string; bank: string; sum: string }) => {
+const CurrentAmountValue = (props: { title: string; datas: [string, string][] }) => {
     return (
-        <Col>
+        <div className="mb-3">
             <h3>{props.title}</h3>
-            <p className="m-0">現金：{props.cash}</p>
-            <p className="m-0">銀行：{props.bank}</p>
-            <p className="m-0">合計：{props.sum}</p>
-        </Col>
+            <table className="total-data-table">
+                <tbody>
+                    {props.datas.map((d) => {
+                        return (
+                            <tr className="total-data-tr">
+                                <td className="account-title-td">{d[0]}</td>
+                                <td className="amount-td">{d[1]}</td>
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </table>
+        </div>
     );
 };
 
@@ -48,18 +59,50 @@ const CurrentAmount = () => {
         return flowDict;
     }
 
-    const sheetId = "1uwM7-NMiNbSnjRfVXhekLoKSFMFZt2zd_ZMksGRE_9U";
-    const sheetName = "月別集計";
-    const apiKey = "AIzaSyBh6fWBIDR8nZvucod3Fe77Ro4Hd3xtjO8";
-    const jsonUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=${apiKey}`;
+    /**スプレッドシートのURLにリクエストを送る */
+    const requestToSheet = (): JQuery.jqXHR<string> => {
+        return $.ajax({ url: TOTAL_DATA_URL, method: "GET" });
+    };
 
-    const [balance, setBalance] = useState({ cash: "", bank: "", sum: "" });
-    const [flow, setFlow] = useState({ cash: "", bank: "", sum: "" });
+    /**スプレッドシートからのレスポンスから今月のデータのみを抽出 */
+    const getMonthData = (resText: string) => {
+        // 今月
+        const date = new Date();
+        const thisYear = date.getFullYear();
+        const thisMonth = date.getMonth() + 1;
+        const thisDateStr = `${thisYear}年${thisMonth}月`;
 
-    const updateData = async () => {
-        $.getJSON(jsonUrl).done((json: { values: string[][] }) => {
-            setBalance(getBalance(json.values));
-            setFlow(getFlow(json.values));
+        const arr = resText.split("\n").map((row) => row.split("\t"));
+        const headers = arr[0];
+        const monthRow = arr.find((row) => row[0] === thisDateStr);
+        const dataNum = headers.length;
+
+        const data: [string, string][] = [];
+        if (monthRow) {
+            for (let i = 1; i < dataNum; i++) {
+                data.push([headers[i], monthRow[i]]);
+            }
+        } else {
+            for (let i = 1; i < dataNum; i++) {
+                data.push([headers[i], "データの取得に失敗しました"]);
+            }
+        }
+        return data;
+    };
+
+    const [assetsData, setAssetsData] = useState<[string, string][]>(["現金", "普通預金", "資産"].map((title) => [title, "¥0"]));
+    const [liabilitiesData, setLiabilitiesData] = useState<[string, string][]>(["クレジット未払金", "負債"].map((title) => [title, "¥0"]));
+    const [PLData, setPLData] = useState<[string, string][]>(["損益"].map((title) => [title, "¥0"]));
+
+    const updateData = () => {
+        setAssetsData((prev) => prev.map((prevItem) => [prevItem[0], "読み込み中"]));
+        setLiabilitiesData((prev) => prev.map((prevItem) => [prevItem[0], "読み込み中"]));
+        setPLData((prev) => prev.map((prevItem) => [prevItem[0], "読み込み中"]));
+        requestToSheet().done((d) => {
+            const data = getMonthData(d);
+            setAssetsData((prev) => prev.map((prevItem) => data.filter((item) => item[0] === prevItem[0])[0]));
+            setLiabilitiesData((prev) => prev.map((prevItem) => data.filter((item) => item[0] === prevItem[0])[0]));
+            setPLData((prev) => prev.map((prevItem) => data.filter((item) => item[0] === prevItem[0])[0]));
         });
     };
 
@@ -78,12 +121,11 @@ const CurrentAmount = () => {
                 <AccordionItem eventKey="0">
                     <AccordionHeader onClick={buttonOnClick}>現在のデータを表示</AccordionHeader>
                     <AccordionBody>
-                        <Row>
-                            <CurrentAmountValue title="現在の残高" cash={balance.cash} bank={balance.bank} sum={balance.sum} />
-                            <CurrentAmountValue title="今月の収支" cash={flow.cash} bank={flow.bank} sum={flow.sum} />
-                        </Row>
+                        <CurrentAmountValue title="現在の資産" datas={assetsData} />
+                        <CurrentAmountValue title="現在の負債" datas={liabilitiesData} />
+                        <CurrentAmountValue title="今月の損益" datas={PLData} />
                         <div className="w-100 text-end mt-3">
-                            <a href="https://docs.google.com/spreadsheets/d/1uwM7-NMiNbSnjRfVXhekLoKSFMFZt2zd_ZMksGRE_9U/edit#gid=219452251">
+                            <a href={EDIT_SHEET_URL} target="_blank" rel="noopener noreferrer">
                                 スプレッドシートはここから
                             </a>
                         </div>
