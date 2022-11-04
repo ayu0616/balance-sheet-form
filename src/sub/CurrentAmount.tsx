@@ -5,7 +5,7 @@ import AccordionBody from "react-bootstrap/esm/AccordionBody";
 import AccordionHeader from "react-bootstrap/esm/AccordionHeader";
 import AccordionItem from "react-bootstrap/esm/AccordionItem";
 import { EDIT_SHEET_URL, TOTAL_DATA_URL } from "../settings/constants";
-import "./style.scss"
+import "./style.scss";
 
 const CurrentAmountValue = (props: { title: string; datas: [string, string][] }) => {
     return (
@@ -28,37 +28,6 @@ const CurrentAmountValue = (props: { title: string; datas: [string, string][] })
 };
 
 const CurrentAmount = () => {
-    function getBalance(json: string[][]) {
-        // Spreadsheetから残高を取得
-        const balanceArray = json.slice(-1)[0];
-        const balanceDict = {
-            cash: balanceArray[1],
-            bank: balanceArray[2],
-            sum: balanceArray.slice(-1)[0],
-        };
-        return balanceDict;
-    }
-
-    function getFlow(json: string[][]) {
-        // 今月
-        const date = new Date();
-        const thisYear = date.getFullYear();
-        const thisMonth = date.getMonth() + 1;
-        const thisDateStr = `${thisYear}年${thisMonth}月`;
-        // jsonから今月の収支を取得
-        let flowDict = { cash: "", bank: "", sum: "" };
-        json.forEach((value) => {
-            if (value[0] === thisDateStr) {
-                flowDict = {
-                    cash: value[1],
-                    bank: value[2],
-                    sum: value.slice(-1)[0],
-                };
-            }
-        });
-        return flowDict;
-    }
-
     /**スプレッドシートのURLにリクエストを送る */
     const requestToSheet = (): JQuery.jqXHR<string> => {
         return $.ajax({ url: TOTAL_DATA_URL, method: "GET" });
