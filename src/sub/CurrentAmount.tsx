@@ -61,16 +61,19 @@ const CurrentAmount = () => {
 
     const [assetsData, setAssetsData] = useState<[string, string][]>(["現金", "普通預金", "資産"].map((title) => [title, "¥0"]));
     const [liabilitiesData, setLiabilitiesData] = useState<[string, string][]>(["クレジット未払金", "負債"].map((title) => [title, "¥0"]));
+    const [netAssetsData, setNetAssetsData] = useState<[string, string][]>(["純資産"].map((title) => [title, "¥0"]));
     const [PLData, setPLData] = useState<[string, string][]>(["損益"].map((title) => [title, "¥0"]));
 
     const updateData = () => {
         setAssetsData((prev) => prev.map((prevItem) => [prevItem[0], "読み込み中"]));
         setLiabilitiesData((prev) => prev.map((prevItem) => [prevItem[0], "読み込み中"]));
+        setNetAssetsData((prev) => prev.map((prevItem) => [prevItem[0], "読み込み中"]));
         setPLData((prev) => prev.map((prevItem) => [prevItem[0], "読み込み中"]));
         requestToSheet().done((d) => {
             const data = getMonthData(d);
             setAssetsData((prev) => prev.map((prevItem) => data.filter((item) => item[0] === prevItem[0])[0]));
             setLiabilitiesData((prev) => prev.map((prevItem) => data.filter((item) => item[0] === prevItem[0])[0]));
+            setNetAssetsData((prev) => prev.map((prevItem) => data.filter((item) => item[0] === prevItem[0])[0]));
             setPLData((prev) => prev.map((prevItem) => data.filter((item) => item[0] === prevItem[0])[0]));
         });
     };
@@ -92,6 +95,7 @@ const CurrentAmount = () => {
                     <AccordionBody>
                         <CurrentAmountValue title="現在の資産" datas={assetsData} />
                         <CurrentAmountValue title="現在の負債" datas={liabilitiesData} />
+                        <CurrentAmountValue title="現在の純資産" datas={netAssetsData} />
                         <CurrentAmountValue title="今月の損益" datas={PLData} />
                         <div className="w-100 text-end mt-3">
                             <a href={EDIT_SHEET_URL} target="_blank" rel="noopener noreferrer">
