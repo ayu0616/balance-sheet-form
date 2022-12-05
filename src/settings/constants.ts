@@ -1,5 +1,5 @@
 /**クロスオリジンエラーを回避するために先頭につけるURL */
-export const NOT_CORS_URL = "https://glacial-shelf-66484.herokuapp.com/";
+export const NOT_CORS_URL = "https://cors-anywhere-zhqzb2nbkq-uc.a.run.app/";
 
 /**勘定科目が入ったURL */
 export const ACCOUNT_TITLES_URL =
